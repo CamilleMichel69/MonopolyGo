@@ -44,6 +44,8 @@ exports.createSticker = (req, res, next) => {
         });
 };
 
+
+// Supprimer un autocollant (ne supprime pas l'image)
 exports.deleteSticker = async (req, res) => {
     try {
       const stickerId = req.params.id;
@@ -69,7 +71,8 @@ exports.deleteSticker = async (req, res) => {
     } catch (error) {
       return res.status(500).send({ message: 'Erreur lors de la suppression de l’autocollant.' });
     }
-  };  
+  };
+  
 
 // Récupérer un autocollant spécifique
 exports.getOneSticker = (req, res, next) => {
