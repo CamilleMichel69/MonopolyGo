@@ -101,7 +101,7 @@ body {
     width: 30%; 
     border-radius: 15px; 
     text-align: center; 
-    position: relative; /* Ajouté pour permettre le positionnement absolu du compteur */
+    position: relative; 
     transition: transform 0.2s;
 }
 
@@ -139,7 +139,6 @@ body {
     background-color: rgba(40, 163, 64, 1);
 }
 
-/* Ajout du style pour le compteur */
 .sticker-count {
     position: absolute;
     top: 10px;
@@ -149,7 +148,7 @@ body {
     padding: 5px 8px;
     border-radius: 50%;
     font-weight: bold;
-    z-index: 10; /* S'assure que le compteur apparaisse au-dessus de l'image */
+    z-index: 10;
     font-size: 0.8em;
 }
 
