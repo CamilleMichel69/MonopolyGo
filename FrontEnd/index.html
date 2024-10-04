@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autocollants Monopoly Go</title>
+  <link rel="icon" href="https://img.icons8.com/?size=100&id=TuoZ6pTmiTRp&format=png&color=000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <img src="./images/Monopoly-Go-Sticker-Packs.jpg"/>
+  <div class="firstPart">  
+  <h1>AUTOCOLLANTS</h1>
+
+  <!-- Formulaire pour ajouter un autocollant -->
+  <form id="stickerForm" enctype="multipart/form-data">
+    <div class="form-group">
+        <select id="collection" class="form-input" required>
+            <option value="" disabled selected>Collection</option>
+            <option value="New York de Spidey">New York de Spidey</option>
+            <option value="Salut les musclés">Salut les musclés</option>
+            <option value="Cosmo et Scottie">Cosmo et Scottie</option>
+            <option value="Potes de Gym">Potes de Gym</option>
+            <option value="Tisseur de toile">Tisseur de toile</option>
+            <option value="Double Deadpool">Double Deadpool</option>
+            <option value="Golfeuse Verte">Golfeuse Verte</option>
+            <option value="Ecole Shield">Ecole Shield</option>
+            <option value="Bouffon Vert">Bouffon Vert</option>
+            <option value="Monopoly Avengers">Monopoly Avengers</option>
+            <option value="Le Braquage">Le Braquage</option>
+            <option value="Avant le braquage">Avant le braquage</option>
+            <option value="Détective Jones">Détective Jones</option>
+            <option value="Wade et Logan">Wade et Logan</option>
+            <option value="Héros planètaires">Héros planètaires</option>
+            <option value="Style Wakanda">Style Wakanda</option>
+            <option value="Manoir X">Manoir X</option>
+            <option value="Etrange Strange">Etrange Strange</option>
+        </select>
+
+        <select id="name" class="form-input" required>
+            <option value="" disabled selected>Nom</option>
+            <!-- Les options des noms seront remplies dynamiquement -->
+        </select>
+
+        <select id="owner" class="form-input" required>
+            <option value="" disabled selected>Joueur</option>
+            <option value="Camille">Camille</option>
+            <option value="Andrea">Andrea</option>
+        </select>
+    </div>
+    <button type="submit" class="submit-btn">Ajouter</button>
+</form>
+</div>
+
+  <!-- Section pour afficher les autocollants existants -->
+  <h2>Liste des autocollants</h2>
+  <div class="button-owner">
+    <button id="owner" class="button-name" onclick="filterStickers('Camille')">CAMILLE</button>
+    <button id="owner" class="button-name" onclick="filterStickers('Andrea')">ANDREA</button>
+  </div>
+  <div id="stickersList"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
