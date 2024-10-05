@@ -84,9 +84,19 @@ exports.getOneSticker = (req, res, next) => {
 // Récupérer tous les autocollants (avec filtre optionnel par owner)
 exports.getAllStickers = (req, res, next) => {
     const owner = req.query.owner;
-    const query = owner ? { owner: owner } : {};
+    const filter = req.query.filter; // Récupère le filtre (Tous ou Doublons)
+    
+    // Base de la requête : filtre par owner si défini
+    let query = owner ? { owner: owner } : {};
 
+    // Si le filtre est "Doublons", on ajoute une condition pour ne récupérer que les autocollants en double
+    if (filter === 'doublons') {
+        query.quantity = { $gt: 1 }; // Condition : récupérer uniquement les autocollants dont la quantité est supérieure à 1
+    }
+
+    // Exécution de la requête
     Sticker.find(query)
         .then(stickers => res.status(200).json(stickers))
         .catch(error => res.status(400).json({ error }));
 };
+

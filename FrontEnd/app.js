@@ -1,15 +1,17 @@
 // URL de l'API
 const API_URL = 'http://localhost:3000/api/stickers';
 
-const filterStickers = async (owner) => {
-  try {
-    const response = await fetch(`${API_URL}?owner=${owner}`);
-    const stickers = await response.json();
-    displayStickers(stickers);
-  } catch (error) {
-    console.error('Erreur lors du filtrage des autocollants :', error);
-  }
-};
+const filterStickers = async (owner, filter = 'tous') => {
+    try {
+      // Ajoute le filtre dans la requête
+      const response = await fetch(`${API_URL}?owner=${owner}&filter=${filter}`);
+      const stickers = await response.json();
+      displayStickers(stickers);
+    } catch (error) {
+      console.error('Erreur lors du filtrage des autocollants :', error);
+    }
+  };
+  
 
 // Fonction pour ajouter un autocollant
 const addSticker = async (sticker) => {
@@ -144,3 +146,29 @@ document.getElementById('collection').addEventListener('change', function() {
     });
   }
 });
+
+// Ton ancienne fonction filterStickers devrait rester comme elle est.
+
+function toggleDropdown(owner) {
+  const dropdown = document.getElementById(`dropdown-${owner}`);
+  dropdown.classList.toggle('show');
+}
+
+function filterDropdown(option, owner) {
+  if (option === 'all') {
+    filterStickers(owner);
+  } else if (option === 'duplicates') {
+    filterStickers(owner, 'duplicates');
+  }
+}
+
+// Ajoute ça à la fin de ton fichier JavaScript.
+document.addEventListener('click', function (event) {
+  const dropdowns = document.querySelectorAll('.dropdown-content');
+  dropdowns.forEach((dropdown) => {
+    if (!dropdown.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+});
+

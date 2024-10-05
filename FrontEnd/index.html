@@ -57,10 +57,21 @@
   <!-- Section pour afficher les autocollants existants -->
   <h2>Liste des autocollants</h2>
   <div class="button-owner">
-    <button id="owner" class="button-name" onclick="filterStickers('Camille')">CAMILLE</button>
-    <button id="owner" class="button-name" onclick="filterStickers('Andrea')">ANDREA</button>
+    <select id="owner" class="button-name" onchange="filterStickers('Camille', this.value)">
+        <option value="" disabled selected>CAMILLE</option>
+        <option value="tous">Tous</option>
+        <option value="doublons">Doublons</option>
+    </select>
+    
+    <select id="owner" class="button-name" onchange="filterStickers('Andrea', this.value)">
+        <option value="" disabled selected>ANDREA</option>
+        <option value="tous">Tous</option>
+        <option value="doublons">Doublons</option>
+    </select>
+    
   </div>
   <div id="stickersList"></div>
+  
 
   <script src="app.js"></script>
 </body>

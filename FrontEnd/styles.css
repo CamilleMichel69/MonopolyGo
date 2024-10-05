@@ -86,16 +86,49 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   }
 
-  .button-name {
-    background-color: rgba(40, 163, 64, 0.6);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px 20px;
-    font-family: 'Afacad flux';
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  }
+.button-name {
+  background-color: rgba(40, 163, 64, 0.6);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px 20px;
+  font-family: 'Afacad flux';
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 10px 0;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown.show .dropdown-content {
+  display: block;
+}
+
   
   .sticker {
     width: 30%; 
@@ -133,10 +166,6 @@ body {
     margin-top: 15px;
     width: 70%;
     font-size: 11px;
-}
-
-.sticker button:hover {
-    background-color: rgba(40, 163, 64, 1);
 }
 
 .sticker-count {
