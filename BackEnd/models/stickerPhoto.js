@@ -1,6 +1,6 @@
 const stickerImageMapping = {
     "New York de Spidey": {
-      "NY, Mon Pote !": "NewYorkSpidey_NYMonPote.jpg",
+      "NY, Mon Pote !": "NewYorkSpidey_NYmonpote.jpg",
       "Qui Suis-Je ?": "NewYorkSpidey_Quisuisje.jpg",
       "Metro en Retard": "NewYorkSpidey_Metroenretard.jpg",
       "Transport Aérien": "NewYorkSpidey_Transportaerien.jpg",
