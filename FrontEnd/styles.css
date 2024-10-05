@@ -1,51 +1,50 @@
 body {
     margin: 0;
-    background: linear-gradient(180deg, #d1e2ff 10%, #d1e2ff 90%);
+    background: #fff6f6 ;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Afacad Flux';
-  }
+}
 
-  img {
+img {
     width: 100%;
-  }
+}
   
-  h1 {
-    color: #75a0ea; 
+h1 {
+    color: white; 
     font-size: 50px;
     text-align: center;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Ombre légère pour donner de la profondeur */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
 }
 
-  
 .firstPart {
-    background: linear-gradient(180deg, #ffb76f 70%, #d1e2ff 100%);
-    width: 100%;
-    padding-bottom: 50px;
+    background: #be4343;
+    width: 90%;
+    border-radius: 20px;
+    margin-top: 40px;
 }
 
-  form {
+form {
     margin-bottom: 20px;
-  }
+}
   
-/* Centrer le formulaire dans la page */
 #stickerForm {
     display: flex;
-    flex-direction: column; /* Le bouton sera sous les champs */
+    flex-direction: column; 
     align-items: center;
     width: 100%;
-  }
+}
   
 .form-group {
     display: flex;
     justify-content: space-between;
     align-items: center; 
     width: 95%;
-  }
+}
   
-  .form-input {
+.form-input {
     font-family: 'Afacad flux';
     padding: 10px;
     margin: 0 5px;
@@ -53,89 +52,72 @@ body {
     border-radius: 5px;
     border: none;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  }
+}
    
-  /* Centrer le bouton de soumission sous les champs */
-  #stickerForm button {
+#stickerForm button {
     font-family: 'Afacad flux';
-    background-color: #75a0ea;
+    background-color: #590000;
     color: white;
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 30px;
     border: none;
     border-radius: 5px;
     margin-top: 30px; 
     cursor: pointer;
-    transition: background-color 0.3s ease;
     width: auto; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  }
+}
     
-  #stickersList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; 
-    gap: 20px; 
+#stickersList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     margin: 20px;
-  }
+}
 
-  h2 {
-    color: rgba(42, 177, 69, 0.6);
+h2 {
+    color: #be4343;
     font-size: 35px;
-    margin-top: 0;
+    margin-bottom: 10px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  }
-
-.button-name {
-  background-color: rgba(40, 163, 64, 0.6);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin: 10px 20px;
-  font-family: 'Afacad flux';
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  position: relative;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
+.button-owner {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
 }
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 5px;
-  padding: 10px 0;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown.show .dropdown-content {
-  display: block;
-}
-
   
-  .sticker {
-    width: 30%; 
+.dropdown-owner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+  
+.owner-label {
+    font-size: 19px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #590000;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+  
+.button-name {
+    background-color: #be4343;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-family: 'Afacad flux';
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}  
+  
+.sticker {
     border-radius: 15px; 
     text-align: center; 
     position: relative; 
-    transition: transform 0.2s;
 }
 
 .sticker img {
@@ -148,6 +130,7 @@ body {
 .sticker h3 {
     font-size: 1.1em;
     margin: 5px 0;
+    color: #be4343;
 }
 
 .sticker p {
@@ -157,7 +140,7 @@ body {
 }
 
 .sticker button {
-    background-color: rgba(40, 163, 64, 0.6);
+    background-color: #be4343;
     color: white;
     border: none;
     padding: 5px;
@@ -165,14 +148,15 @@ body {
     cursor: pointer;
     margin-top: 15px;
     width: 70%;
-    font-size: 11px;
+    font-size: 13px;
+    font-family: 'Afacad Flux';
 }
 
 .sticker-count {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.75);
     color: white;
     padding: 5px 8px;
     border-radius: 50%;
@@ -180,7 +164,3 @@ body {
     z-index: 10;
     font-size: 0.8em;
 }
-
-
-  
-  

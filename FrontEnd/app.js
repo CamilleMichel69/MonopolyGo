@@ -3,6 +3,13 @@ const API_URL = 'http://localhost:3000/api/stickers';
 
 const filterStickers = async (owner, filter = 'tous') => {
     try {
+      // Réinitialiser l'autre dropdown sur "Select"
+      if (owner === 'Camille') {
+        document.getElementById('andrea-select').selectedIndex = 0; // Réinitialise Andrea
+      } else if (owner === 'Andrea') {
+        document.getElementById('camille-select').selectedIndex = 0; // Réinitialise Camille
+      }
+  
       // Ajoute le filtre dans la requête
       const response = await fetch(`${API_URL}?owner=${owner}&filter=${filter}`);
       const stickers = await response.json();
@@ -11,6 +18,7 @@ const filterStickers = async (owner, filter = 'tous') => {
       console.error('Erreur lors du filtrage des autocollants :', error);
     }
   };
+  
   
 
 // Fonction pour ajouter un autocollant
@@ -26,7 +34,6 @@ const addSticker = async (sticker) => {
       body: formData,
     });
     const data = await response.json();
-    console.log('Autocollant ajouté :', data);
     fetchStickers();
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'autocollant :', error);
@@ -47,16 +54,13 @@ const fetchStickers = async () => {
 // Fonction pour afficher les autocollants
 const displayStickers = (stickers) => {
     const stickersList = document.getElementById('stickersList');
-    stickersList.innerHTML = ''; // Efface la liste actuelle
+    stickersList.innerHTML = ''; 
   
-    // Tri des autocollants par collection, puis par nom
     stickers.sort((a, b) => {
-      // Trier d'abord par collection, puis par le nom des autocollants
       const collectionOrder = Object.keys(namesByCollection).indexOf(a.collection) - Object.keys(namesByCollection).indexOf(b.collection);
       if (collectionOrder !== 0) {
-        return collectionOrder; // Si les collections sont différentes, on les trie
+        return collectionOrder; 
       }
-      // Si même collection, trier par ordre des noms dans la collection
       return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
     });
   
@@ -67,7 +71,7 @@ const displayStickers = (stickers) => {
         ${sticker.imageUrl ? `<img src="${sticker.imageUrl}" alt="${sticker.name}" width="100">` : ''}
         <h3>${sticker.name}</h3>
         <p>${sticker.collection}</p>
-        <p>Joueur : ${sticker.owner}</p>
+        <p>${sticker.owner}</p>
         ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
         <button onclick="deleteSticker('${sticker._id}')">Supprimer</button>
       `;
@@ -75,14 +79,12 @@ const displayStickers = (stickers) => {
     });  
   };  
 
-// Fonction pour supprimer un autocollant
 const deleteSticker = async (id) => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
     });
     const data = await response.json();
-    console.log('Autocollant supprimé :', data);
     fetchStickers(); 
   } catch (error) {
     console.error('Erreur lors de la suppression de l\'autocollant :', error);

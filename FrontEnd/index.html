@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="./images/Monopoly-Go-Sticker-Packs.jpg"/>
+    <img src="./images/MPY-21901_PR Character Logo_MrM_Scottie_v3.jpg"/>
   <div class="firstPart">  
   <h1>AUTOCOLLANTS</h1>
 
@@ -57,19 +57,27 @@
   <!-- Section pour afficher les autocollants existants -->
   <h2>Liste des autocollants</h2>
   <div class="button-owner">
-    <select id="owner" class="button-name" onchange="filterStickers('Camille', this.value)">
-        <option value="" disabled selected>CAMILLE</option>
+    <div class="dropdown-owner">
+      <label for="camille-select" class="owner-label">CAMILLE</label>
+      <select id="camille-select" class="button-name" onchange="filterStickers('Camille', this.value)">
+        <option value="" disabled selected>Select</option>
         <option value="tous">Tous</option>
         <option value="doublons">Doublons</option>
-    </select>
-    
-    <select id="owner" class="button-name" onchange="filterStickers('Andrea', this.value)">
-        <option value="" disabled selected>ANDREA</option>
+        <option value="exchange">Échange</option>
+      </select>
+    </div>
+  
+    <div class="dropdown-owner">
+      <label for="andrea-select" class="owner-label">ANDREA</label>
+      <select id="andrea-select" class="button-name" onchange="filterStickers('Andrea', this.value)">
+        <option value="" disabled selected>Select</option>
         <option value="tous">Tous</option>
         <option value="doublons">Doublons</option>
-    </select>
-    
-  </div>
+        <option value="exchange">Échange</option>
+      </select>
+    </div>
+  </div>  
+
   <div id="stickersList"></div>
   
 

@@ -1,11 +1,10 @@
 const Sticker = require('../models/sticker');
-const stickerImageMapping = require('../models/stickerPhoto'); // Mapping des images
+const stickerImageMapping = require('../models/stickerPhoto'); 
 
 // Créer un nouvel autocollant
 exports.createSticker = (req, res, next) => {
     const { name, collection, owner } = req.body;
 
-    // Vérification du mapping pour obtenir le fichier image correct
     const imageFileName = stickerImageMapping[collection]?.[name];
 
     if (!imageFileName) {
@@ -14,23 +13,20 @@ exports.createSticker = (req, res, next) => {
 
     const imageUrl = `${req.protocol}://${req.get('host')}/images/stickers/${imageFileName}`;
 
-    // Recherche d'un autocollant existant avec le même nom, collection et owner
     Sticker.findOne({ name, collection, owner })
         .then(existingSticker => {
             if (existingSticker) {
-                // Si l'autocollant existe, incrémente la quantité
                 existingSticker.quantity = (existingSticker.quantity || 1) + 1;
                 return existingSticker.save()
                     .then(() => res.status(200).json({ message: 'Quantité mise à jour !' }))
                     .catch(error => res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' }));
             } else {
-                // Si l'autocollant n'existe pas, crée un nouvel autocollant avec quantité = 1
                 const sticker = new Sticker({
                     name,
                     collection,
                     imageUrl,
                     owner,
-                    quantity: 1 // Initialisation de la quantité
+                    quantity: 1
                 });
 
                 sticker.save()
@@ -44,24 +40,21 @@ exports.createSticker = (req, res, next) => {
         });
 };
 
-
 // Supprimer un autocollant (ne supprime pas l'image)
 exports.deleteSticker = async (req, res) => {
     try {
       const stickerId = req.params.id;
-      const owner = req.body.owner; // Assurez-vous d'envoyer l'owner dans la requête
+      const owner = req.body.owner; 
   
-      // Trouver l'autocollant
       const sticker = await Sticker.findById(stickerId);
   
       if (!sticker) {
         return res.status(404).send({ message: 'Autocollant non trouvé.' });
       }
   
-      // Vérifiez si c'est le dernier autocollant
       if (sticker.quantity > 1) {
-        sticker.quantity -= 1; // Décrémenter le compteur
-        await sticker.save(); // Enregistrez les modifications
+        sticker.quantity -= 1; 
+        await sticker.save(); 
         return res.status(200).send({ message: 'Autocollant décrémenté.', sticker });
       } else {
         // Si c'est le dernier, supprimez l'autocollant
@@ -73,7 +66,6 @@ exports.deleteSticker = async (req, res) => {
     }
   };
   
-
 // Récupérer un autocollant spécifique
 exports.getOneSticker = (req, res, next) => {
     Sticker.findOne({ _id: req.params.id })
@@ -84,19 +76,31 @@ exports.getOneSticker = (req, res, next) => {
 // Récupérer tous les autocollants (avec filtre optionnel par owner)
 exports.getAllStickers = (req, res, next) => {
     const owner = req.query.owner;
-    const filter = req.query.filter; // Récupère le filtre (Tous ou Doublons)
-    
-    // Base de la requête : filtre par owner si défini
+    const filter = req.query.filter;
+
     let query = owner ? { owner: owner } : {};
 
-    // Si le filtre est "Doublons", on ajoute une condition pour ne récupérer que les autocollants en double
     if (filter === 'doublons') {
-        query.quantity = { $gt: 1 }; // Condition : récupérer uniquement les autocollants dont la quantité est supérieure à 1
+        query.quantity = { $gt: 1 }; 
     }
 
-    // Exécution de la requête
+    if (filter === 'exchange') {
+        const otherOwner = owner === 'Camille' ? 'Andrea' : 'Camille';
+        
+        Sticker.find({ owner: otherOwner })
+            .then(otherStickers => {
+                const otherStickerIds = otherStickers.map(sticker => sticker.name); 
+                return Sticker.find({
+                    owner: owner,
+                    quantity: { $gt: 1 }, 
+                    name: { $nin: otherStickerIds }
+                });
+            })
+            .then(stickers => res.status(200).json(stickers))
+            .catch(error => res.status(400).json({ error }));
+        return;
+    }
     Sticker.find(query)
         .then(stickers => res.status(200).json(stickers))
         .catch(error => res.status(400).json({ error }));
 };
-
