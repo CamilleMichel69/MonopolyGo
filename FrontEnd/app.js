@@ -1,5 +1,5 @@
 // URL de l'API
-const API_URL = 'http://localhost:3000/api/stickers';
+const API_URL = 'https://monopolygo-1.onrender.com/api/stickers';
 
 const filterStickers = async (owner, filter = 'tous') => {
     try {
