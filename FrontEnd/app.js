@@ -1,14 +1,14 @@
 // URL de l'API
 const API_URL = 'https://monopolygo-1.onrender.com/api/stickers';
-let stickerToDeleteId = null; // Variable pour stocker l'ID de l'autocollant à supprimer
+let stickerToDeleteId = null; 
 
 const filterStickers = async (owner, filter = 'tous') => {
     try {
       // Réinitialiser l'autre dropdown sur "Select"
       if (owner === 'Camille') {
-        document.getElementById('andrea-select').selectedIndex = 0; // Réinitialise Andrea
+        document.getElementById('andrea-select').selectedIndex = 0; 
       } else if (owner === 'Andrea') {
-        document.getElementById('camille-select').selectedIndex = 0; // Réinitialise Camille
+        document.getElementById('camille-select').selectedIndex = 0; 
       }
   
       // Ajoute le filtre dans la requête
@@ -56,6 +56,8 @@ const fetchStickers = async () => {
 const displayStickers = (stickers) => {
     const stickersList = document.getElementById('stickersList');
     stickersList.innerHTML = ''; 
+    const message = document.getElementById('message');
+    message.innerHTML = '';
   
     stickers.sort((a, b) => {
       const collectionOrder = Object.keys(namesByCollection).indexOf(a.collection) - Object.keys(namesByCollection).indexOf(b.collection);
@@ -64,6 +66,10 @@ const displayStickers = (stickers) => {
       }
       return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
     });
+
+    if (filter = 'exchange' && stickers.length === 0) {
+        message.innerHTML = '<p>Aucun autocollant à échanger</p>';
+    };
   
     stickers.forEach((sticker, index) => {
       const stickerDiv = document.createElement('div');
@@ -86,14 +92,14 @@ const displayStickers = (stickers) => {
 
 // Fonction pour afficher la modale et stocker l'ID de l'autocollant à supprimer
 const showDeleteModal = (id) => {
-    stickerToDeleteId = id; // Stocker l'ID de l'autocollant
-    document.getElementById('deleteModal').style.display = 'block'; // Afficher la modale
+    stickerToDeleteId = id; 
+    document.getElementById('deleteModal').style.display = 'block'; 
 };
   
 // Fonction pour fermer la modale
 const closeDeleteModal = () => {
-    stickerToDeleteId = null; // Réinitialiser l'ID
-    document.getElementById('deleteModal').style.display = 'none'; // Masquer la modale
+    stickerToDeleteId = null; 
+    document.getElementById('deleteModal').style.display = 'none';
 };
 
 // Fonction pour confirmer et supprimer l'autocollant
@@ -213,5 +219,5 @@ window.onscroll = function() {
 
 // Quand l'utilisateur clique sur le bouton, fait défiler vers le haut
 backToTopBtn.onclick = function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Défilement doux
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
 };
