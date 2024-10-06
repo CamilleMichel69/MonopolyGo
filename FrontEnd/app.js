@@ -1,5 +1,6 @@
 // URL de l'API
 const API_URL = 'https://monopolygo-1.onrender.com/api/stickers';
+let stickerToDeleteId = null; // Variable pour stocker l'ID de l'autocollant à supprimer
 
 const filterStickers = async (owner, filter = 'tous') => {
     try {
@@ -73,23 +74,43 @@ const displayStickers = (stickers) => {
         <p>${sticker.collection}</p>
         <p>${sticker.owner}</p>
         ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
-        <button onclick="deleteSticker('${sticker._id}')">Supprimer</button>
+        <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
       `;
       stickersList.appendChild(stickerDiv);
     });  
-  };  
+};  
 
-const deleteSticker = async (id) => {
-  try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: 'DELETE',
-    });
-    const data = await response.json();
-    fetchStickers(); 
-  } catch (error) {
-    console.error('Erreur lors de la suppression de l\'autocollant :', error);
-  }
+// Fonction pour afficher la modale et stocker l'ID de l'autocollant à supprimer
+const showDeleteModal = (id) => {
+    stickerToDeleteId = id; // Stocker l'ID de l'autocollant
+    document.getElementById('deleteModal').style.display = 'block'; // Afficher la modale
 };
+  
+// Fonction pour fermer la modale
+const closeDeleteModal = () => {
+    stickerToDeleteId = null; // Réinitialiser l'ID
+    document.getElementById('deleteModal').style.display = 'none'; // Masquer la modale
+};
+
+// Fonction pour confirmer et supprimer l'autocollant
+const deleteSticker = async () => {
+    if (stickerToDeleteId) {
+      try {
+        const response = await fetch(`${API_URL}/${stickerToDeleteId}`, {
+          method: 'DELETE',
+        });
+        const data = await response.json();
+        fetchStickers();
+        closeDeleteModal(); 
+      } catch (error) {
+        console.error('Erreur lors de la suppression de l\'autocollant :', error);
+      }
+    }
+};
+
+// Ajouter les événements pour les boutons "Confirmer" et "Annuler"
+document.getElementById('confirmDeleteBtn').addEventListener('click', deleteSticker);
+document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
 
 // Gérer la soumission du formulaire pour créer un nouvel autocollant
 document.getElementById('stickerForm').addEventListener('submit', (e) => {
