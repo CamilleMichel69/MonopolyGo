@@ -67,6 +67,10 @@ form {
     width: auto; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+#stickerForm button:active {
+    background-color: #450000;
+}
     
 #stickersList {
     display: block; /* On change pour un affichage en bloc pour gérer les sections de collection */
@@ -179,6 +183,10 @@ h2 {
     font-family: 'Afacad Flux';
 }
 
+.sticker button:active {
+    background-color: #590000;
+}
+
 .sticker-count {
     position: absolute;
     top: 10px;
@@ -233,7 +241,6 @@ h2 {
     color: black;
     float: right;
     font-size: 24px;
-    cursor: pointer;
 }
 
 .modal .button-no,
@@ -252,12 +259,19 @@ h2 {
     color: #be4343;
 }
 
+.modal .button-no:active {
+    background: #ffe4e4;
+}
+
 .modal .button-yes {
     background: #be4343;
     border: none;
     color: white;
 }
 
+.modal .button-yes:active {
+    background-color: #590000;
+}
 
 #backToTopBtn {
     position: fixed;
