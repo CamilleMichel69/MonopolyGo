@@ -69,11 +69,28 @@ form {
 }
     
 #stickersList {
+    display: block; /* On change pour un affichage en bloc pour gérer les sections de collection */
+    margin: 20px;
+  }
+  
+  .collection-section {
+    margin-bottom: 30px; /* Espace entre chaque collection */
+  }
+  
+  .collection-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #590000;
+    text-shadow: none;
+  }
+  
+  .sticker-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin: 20px;
-}
+  }
+  
 
 h2 {
     color: #be4343;

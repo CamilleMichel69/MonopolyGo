@@ -58,7 +58,7 @@ const displayStickers = (stickers) => {
     stickersList.innerHTML = ''; 
     const message = document.getElementById('message');
     message.innerHTML = '';
-  
+
     stickers.sort((a, b) => {
       const collectionOrder = Object.keys(namesByCollection).indexOf(a.collection) - Object.keys(namesByCollection).indexOf(b.collection);
       if (collectionOrder !== 0) {
@@ -67,28 +67,58 @@ const displayStickers = (stickers) => {
       return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
     });
 
-    if (filter = 'exchange' && stickers.length === 0) {
+    if (stickers.length === 0) {
         message.innerHTML = '<p>Aucun autocollant à échanger</p>';
-    };
-  
-    stickers.forEach((sticker, index) => {
-      const stickerDiv = document.createElement('div');
-      stickerDiv.classList.add('sticker');
-      stickerDiv.innerHTML = `
-        ${sticker.imageUrl ? `<img src="${sticker.imageUrl}" alt="${sticker.name}" width="100">` : ''}
-        <h3>${sticker.name}</h3>
-        <p>${sticker.collection}</p>
-        <p>${sticker.owner}</p>
-        ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
-        <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
-      `;
-      stickersList.appendChild(stickerDiv);
+        return;
+    }
 
-      setTimeout(() => {
-        stickerDiv.classList.add('show');
-      }, index * 100); 
-    });  
-};  
+    let currentCollection = '';
+    let collectionSection = null;
+
+    stickers.forEach((sticker, index) => {
+        if (sticker.collection !== currentCollection) {
+            currentCollection = sticker.collection;
+
+            // Créer une section pour chaque collection
+            collectionSection = document.createElement('div');
+            collectionSection.classList.add('collection-section');
+
+            // Ajouter le titre de la collection
+            const collectionTitle = document.createElement('h2');
+            collectionTitle.innerText = currentCollection;
+            collectionTitle.classList.add('collection-title');
+            collectionSection.appendChild(collectionTitle);
+
+            // Créer une grille pour les stickers de cette collection
+            const stickerGrid = document.createElement('div');
+            stickerGrid.classList.add('sticker-grid');
+            collectionSection.appendChild(stickerGrid);
+
+            // Ajouter la section entière à la liste principale
+            stickersList.appendChild(collectionSection);
+        }
+
+        // Ajouter le sticker à la grille
+        const stickerDiv = document.createElement('div');
+        stickerDiv.classList.add('sticker');
+        stickerDiv.innerHTML = `
+          ${sticker.imageUrl ? `<img src="${sticker.imageUrl}" alt="${sticker.name}" width="100">` : ''}
+          <h3>${sticker.name}</h3>
+          <p>${sticker.collection}</p>
+          <p>${sticker.owner}</p>
+          ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
+          <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
+        `;
+
+        // Ajouter le sticker à la grille de la collection en cours
+        collectionSection.querySelector('.sticker-grid').appendChild(stickerDiv);
+
+        // Animation d'affichage des stickers
+        setTimeout(() => {
+          stickerDiv.classList.add('show');
+        }, index * 100); 
+    });
+};
 
 // Fonction pour afficher la modale et stocker l'ID de l'autocollant à supprimer
 const showDeleteModal = (id) => {
@@ -180,22 +210,11 @@ document.getElementById('collection').addEventListener('change', function() {
   }
 });
 
-// Ton ancienne fonction filterStickers devrait rester comme elle est.
-
 function toggleDropdown(owner) {
   const dropdown = document.getElementById(`dropdown-${owner}`);
   dropdown.classList.toggle('show');
 }
 
-function filterDropdown(option, owner) {
-  if (option === 'all') {
-    filterStickers(owner);
-  } else if (option === 'duplicates') {
-    filterStickers(owner, 'duplicates');
-  }
-}
-
-// Ajoute ça à la fin de ton fichier JavaScript.
 document.addEventListener('click', function (event) {
   const dropdowns = document.querySelectorAll('.dropdown-content');
   dropdowns.forEach((dropdown) => {
