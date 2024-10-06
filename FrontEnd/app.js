@@ -195,3 +195,19 @@ document.addEventListener('click', function (event) {
   });
 });
 
+// Récupère le bouton
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+// Affiche le bouton lorsque l'utilisateur fait défiler vers le bas de 100px
+window.onscroll = function() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = "block";
+    } else {
+        backToTopBtn.style.display = "none";
+    }
+};
+
+// Quand l'utilisateur clique sur le bouton, fait défiler vers le haut
+backToTopBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Défilement doux
+};

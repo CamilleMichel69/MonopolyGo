@@ -209,4 +209,23 @@ h2 {
     border: none;
     color: white;
 }
-  
+
+#backToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 5;
+    background-color: #590000;
+    opacity: 0.8;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    display: none; 
+    transition: opacity 0.3s;
+}
+footer {
+    margin-top: 40px;
+}
