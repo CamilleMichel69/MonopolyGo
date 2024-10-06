@@ -241,6 +241,7 @@ h2 {
     color: black;
     float: right;
     font-size: 24px;
+    cursor: pointer;
 }
 
 .modal .button-no,

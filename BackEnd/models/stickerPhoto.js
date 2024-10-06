@@ -92,7 +92,7 @@ const stickerImageMapping = {
       "Vol de Tartes": "BouffonVert_VolDeTartes.jpg",
       "Ça alors !": "BouffonVert_CaAlors.jpg",
       "Frondeur de Toile": "BouffonVert_FrondeurDeToile.jpg",
-      "Repère Secret": "BouffonVert_RepereSecret.jpg",
+      "Repaire Secret": "BouffonVert_RepereSecret.jpg",
       "Bouffon Affamé": "BouffonVert_BouffonAffame.jpg",
       "Du Dessus": "BouffonVert_DuDessus.jpg",
       "Ligoté": "BouffonVert_Ligote.jpg",

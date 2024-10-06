@@ -239,7 +239,7 @@ const namesByCollection = {
   "Double Deadpool": ["Furtif Pool", "Vol de Chapeau", "Monopoly en Folie", "Oeuvre d'Art", "Partager les Richesses", "Chimichangas !", "Courtier Courtisé", "Qui ? Moi ?", "A Plus dans le Bus !"],
   "Golfeuse Verte": ["Tous au Green", "Chauffeur XXL", "Club Sandwich", "Main de Hulk", "Quel Danger ?", "QUEL COUP !", "Oups", "Jour de Banner", "Fête sur le Green"],
   "Ecole Shield": ["Nick Fury", "QG du SHIELD", "Gloire au SHIELD", "Oeil de Magnat", "Sans Faute", "Coup d'Envoi", "Duel des Agents", "Nouveau Membre", "Badge d'Honneur"],
-  "Bouffon Vert": ["Piles", "Vol de Tartes", "Ça alors !", "Frondeur de Toile", "Repère Secret", "Bouffon Affamé", "Du Dessus", "Ligoté", "Livraison Spéciale"],
+  "Bouffon Vert": ["Piles", "Vol de Tartes", "Ça alors !", "Frondeur de Toile", "Repaire Secret", "Bouffon Affamé", "Du Dessus", "Ligoté", "Livraison Spéciale"],
   "Monopoly Avengers": ["Arrivée des Héros", "On s'ennuie", "Super Affaire !", "Mjolnir Tout Neuf", "Mini Hulk", "Micropoly", "Iron Man", "Fine Guêpe", "Rassemblement !"],
   "Le Braquage": ["Patrouille", "Le Braquage", "Mystique", "L'Heure du Leurre", "Lévitation", "Enfant Prodige", "Fait pour un Roi", "Impossible !", "Sans Accroc"],
   "Avant le braquage": ["Au Voleur !", "Interpellation", "Apprends-Moi", "Formation d'Espion", "Gadgets", "Exercices", "Force de Frappe", "Alerte au Braquage", "Main dans le Sac"],
