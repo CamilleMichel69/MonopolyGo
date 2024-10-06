@@ -65,7 +65,7 @@ const displayStickers = (stickers) => {
       return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
     });
   
-    stickers.forEach((sticker) => {
+    stickers.forEach((sticker, index) => {
       const stickerDiv = document.createElement('div');
       stickerDiv.classList.add('sticker');
       stickerDiv.innerHTML = `
@@ -77,6 +77,10 @@ const displayStickers = (stickers) => {
         <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
       `;
       stickersList.appendChild(stickerDiv);
+
+      setTimeout(() => {
+        stickerDiv.classList.add('show');
+      }, index * 100); 
     });  
 };  
 

@@ -118,6 +118,14 @@ h2 {
     border-radius: 15px;
     text-align: center;
     position: relative;
+    opacity: 0;
+    transform: translateY(50px); 
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.sticker.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .sticker img {
