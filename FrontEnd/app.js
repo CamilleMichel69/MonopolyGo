@@ -24,21 +24,31 @@ const filterStickers = async (owner, filter = 'tous') => {
 
 // Fonction pour ajouter un autocollant
 const addSticker = async (sticker) => {
-  try {
-    const formData = new FormData();
-    formData.append('name', sticker.name);
-    formData.append('collection', sticker.collection);
-    formData.append('owner', sticker.owner);
-
-    const response = await fetch(`${API_URL}`, {
-      method: 'POST',
-      body: formData,
-    });
-    const data = await response.json();
-    fetchStickers();
-  } catch (error) {
-    console.error('Erreur lors de l\'ajout de l\'autocollant :', error);
-  }
+    try {
+      const formData = new FormData();
+      formData.append('name', sticker.name);
+      formData.append('collection', sticker.collection);
+      formData.append('owner', sticker.owner);
+  
+      const response = await fetch(`${API_URL}`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+  
+        // Afficher la modal si l'ajout est un succès
+        showConfirmationModal();
+  
+        // Recharger les autocollants après l'ajout
+        fetchStickers();
+      } else {
+        console.error('Erreur lors de l\'ajout de l\'autocollant');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de l\'autocollant :', error);
+    }
 };
 
 // Fonction pour récupérer les autocollants existants
@@ -120,33 +130,83 @@ const displayStickers = (stickers) => {
     });
 };
 
-// Fonction pour afficher la modale et stocker l'ID de l'autocollant à supprimer
-const showDeleteModal = (id) => {
-    stickerToDeleteId = id; 
-    document.getElementById('deleteModal').style.display = 'block'; 
+// Fonction générique pour afficher une modale avec animation
+const showModal = (modalId) => {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'flex'; // Flex pour centrer
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10); // Délai pour déclencher l'animation après l'affichage
+
+    if (modalId === 'confirmationModal') {
+        // Pour la modale de confirmation, la fermer après 3 secondes
+        setTimeout(() => {
+            hideModal(modalId);
+        }, 3000);
+    }
 };
-  
-// Fonction pour fermer la modale
+
+// Fonction générique pour cacher une modale avec animation
+const hideModal = (modalId) => {
+    const modal = document.getElementById(modalId);
+    modal.classList.remove('show');
+    modal.classList.add('hide');
+
+    // Retirer complètement après l'animation
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('hide');
+    }, 500); // Durée de l'animation
+};
+
+// Gestion de la fermeture manuelle de la modale de confirmation
+document.querySelector('.close-button').addEventListener('click', () => hideModal('confirmationModal'));
+
+// Fermer la modale quand on clique à l'extérieur
+window.addEventListener('click', (event) => {
+    const confirmationModal = document.getElementById('confirmationModal');
+    const deleteModal = document.getElementById('deleteModal');
+    
+    if (event.target === confirmationModal) {
+        hideModal('confirmationModal');
+    } else if (event.target === deleteModal) {
+        hideModal('deleteModal');
+    }
+});
+
+// Utilisation pour la modale de confirmation
+const showConfirmationModal = () => {
+    showModal('confirmationModal');
+};
+
+// Utilisation pour la modale de suppression
+const showDeleteModal = (id) => {
+    stickerToDeleteId = id;
+    showModal('deleteModal');
+};
+
+// Fonction pour fermer la modale de suppression
 const closeDeleteModal = () => {
-    stickerToDeleteId = null; 
-    document.getElementById('deleteModal').style.display = 'none';
+    stickerToDeleteId = null;
+    hideModal('deleteModal');
 };
 
 // Fonction pour confirmer et supprimer l'autocollant
 const deleteSticker = async () => {
     if (stickerToDeleteId) {
-      try {
-        const response = await fetch(`${API_URL}/${stickerToDeleteId}`, {
-          method: 'DELETE',
-        });
-        const data = await response.json();
-        fetchStickers();
-        closeDeleteModal(); 
-      } catch (error) {
-        console.error('Erreur lors de la suppression de l\'autocollant :', error);
-      }
+        try {
+            const response = await fetch(`${API_URL}/${stickerToDeleteId}`, {
+                method: 'DELETE',
+            });
+            const data = await response.json();
+            fetchStickers();
+            closeDeleteModal(); // Ferme la modale après suppression
+        } catch (error) {
+            console.error('Erreur lors de la suppression de l\'autocollant :', error);
+        }
     }
 };
+
 
 // Ajouter les événements pour les boutons "Confirmer" et "Annuler"
 document.getElementById('confirmDeleteBtn').addEventListener('click', deleteSticker);
