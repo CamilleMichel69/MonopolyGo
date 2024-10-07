@@ -43,6 +43,8 @@ const addSticker = async (sticker) => {
   
         // Recharger les autocollants après l'ajout
         fetchStickers();
+        document.getElementById('camille-select').selectedIndex = 0;
+        document.getElementById('andrea-select').selectedIndex = 0;
       } else {
         console.error('Erreur lors de l\'ajout de l\'autocollant');
       }
@@ -200,7 +202,9 @@ const deleteSticker = async () => {
             });
             const data = await response.json();
             fetchStickers();
-            closeDeleteModal(); // Ferme la modale après suppression
+            closeDeleteModal();
+            document.getElementById('camille-select').selectedIndex = 0;
+            document.getElementById('andrea-select').selectedIndex = 0;
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'autocollant :', error);
         }
