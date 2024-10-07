@@ -18,7 +18,6 @@ exports.createSticker = (req, res, next) => {
     Sticker.findOne({ name, collection, owner })
         .then(existingSticker => {
             if (existingSticker) {
-                // Si l'autocollant existe, incrémente la quantité
                 existingSticker.quantity = (existingSticker.quantity || 1) + 1;
                 return existingSticker.save()
                     .then(() => res.status(200).json({ message: 'Quantité mise à jour !' }))

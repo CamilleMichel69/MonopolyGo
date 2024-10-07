@@ -250,7 +250,7 @@ const namesByCollection = {
   "Détective Jones": ["Nocturne", "Disparition", "Un Nouveau Cas", "Qui est Coupable ?", "Chercher l'Indice", "Suspects Habituels", "Innocent ?", "Patte Parlante", "Tu es Fait !"],
   "Wade et Logan": ["Wade s'amuse", "Triste Pool", "Doppool-Ganger", "X-Manucure", "Waferine", "Si Seulement", "Rêves Fous", "Examen Artistique", "Meilleurs Amis"],
   "Héros planètaires": ["Equipe de Nettoyage", "Longue Portée", "Tornade de Dêchets", "Black Panther", "Racines de Groot", "Morcepool", "Jeter les ordures", "Nettoyer les Cieux", "Galactus"],
-  "Style Wakanda": ["Wakanda !", "Labo de Shury", "Technologie Avancée", "Chat Numérique", "Next Gen", "Style Vibranium", "Salut des Savants", "Nouveaux Jouets", "En Costume"],
+  "Style Wakanda": ["Wakanda !", "Labo de Shuri", "Technologie Avancée", "Chat Numérique", "Next Gen", "Style Vibranium", "Salut des Savants", "Nouveaux Jouets", "En Costume"],
   "Manoir X": ["Le Commencement", "Top Secret", "Amis de la Science", "Le Dernier Debout", "M Cerebro", "Coup de Vent", "Super-Viseur", "Malicia la Malice", "Dernier Gambit"],
   "Etrange Strange": ["Un Bon Comique", "Gros Bouton Rouge", "ZAP !", "Le Coup de la Cape", "Docteur Strange", "Orbe d'Agamotto", "Gargantos", "Portail de Retour", "Tout est Normal"],
 };

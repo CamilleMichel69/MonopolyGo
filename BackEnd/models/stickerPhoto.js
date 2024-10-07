@@ -166,7 +166,7 @@ const stickerImageMapping = {
     },
     "Style Wakanda": {
       "Wakanda !": "StyleWakanda_Wakanda.jpg",
-      "Labo de Shury": "StyleWakanda_LaboDeShuri.jpg",
+      "Labo de Shuri": "StyleWakanda_LaboDeShuri.jpg",
       "Technologie Avancée": "StyleWakanda_TechnologieAvancee.jpg",
       "Chat Numérique": "StyleWakanda_ChatNumerique.jpg",
       "Next Gen": "StyleWakanda_NextGen.jpg",
