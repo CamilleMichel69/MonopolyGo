@@ -3,7 +3,7 @@ const stickerImageMapping = require('../models/stickerPhoto');
 
 // Créer un nouvel autocollant
 exports.createSticker = (req, res, next) => {
-    const { name, collection, owner, stars } = req.body;  // Ajout de la note
+    const { name, collection, owner, stars } = req.body;
 
     const imageFileName = stickerImageMapping[collection]?.[name];
 
@@ -18,9 +18,13 @@ exports.createSticker = (req, res, next) => {
             if (existingSticker) {
                 existingSticker.quantity = (existingSticker.quantity || 1) + 1;
                 if (stars !== undefined) existingSticker.stars = stars;  // Mise à jour des étoiles
+
                 return existingSticker.save()
                     .then(() => res.status(200).json({ message: 'Quantité mise à jour !' }))
-                    .catch(error => res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' }));
+                    .catch(error => {
+                        console.error('Erreur lors de la mise à jour de la quantité:', error);
+                        res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' });
+                    });
             } else {
                 const sticker = new Sticker({
                     name,
@@ -33,15 +37,17 @@ exports.createSticker = (req, res, next) => {
 
                 sticker.save()
                     .then(() => res.status(201).json({ message: 'Autocollant enregistré !' }))
-                    .catch(error => res.status(500).json({ error: 'Erreur lors de l\'enregistrement' }));
+                    .catch(error => {
+                        console.error('Erreur lors de l\'enregistrement:', error);
+                        res.status(500).json({ error: 'Erreur lors de l\'enregistrement' });
+                    });
             }
         })
         .catch(error => {
-            console.error('Erreur lors de la recherche :', error);
+            console.error('Erreur lors de la recherche:', error);
             res.status(500).json({ error: 'Erreur serveur' });
         });
 };
-
 
 // Supprimer un autocollant (ne supprime pas l'image)
 exports.deleteSticker = async (req, res) => {
