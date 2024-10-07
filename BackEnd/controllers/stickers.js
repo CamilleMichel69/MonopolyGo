@@ -3,7 +3,7 @@ const stickerImageMapping = require('../models/stickerPhoto');
 
 // Créer un nouvel autocollant
 exports.createSticker = (req, res, next) => {
-    const { name, collection, owner } = req.body;
+    const { name, collection, owner, stars } = req.body;  // Ajout de la note
 
     const imageFileName = stickerImageMapping[collection]?.[name];
 
@@ -17,6 +17,7 @@ exports.createSticker = (req, res, next) => {
         .then(existingSticker => {
             if (existingSticker) {
                 existingSticker.quantity = (existingSticker.quantity || 1) + 1;
+                if (stars !== undefined) existingSticker.stars = stars;  // Mise à jour des étoiles
                 return existingSticker.save()
                     .then(() => res.status(200).json({ message: 'Quantité mise à jour !' }))
                     .catch(error => res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' }));
@@ -26,7 +27,8 @@ exports.createSticker = (req, res, next) => {
                     collection,
                     imageUrl,
                     owner,
-                    quantity: 1
+                    quantity: 1,
+                    stars: stars || 0  // Par défaut, 0 étoile
                 });
 
                 sticker.save()
@@ -39,6 +41,7 @@ exports.createSticker = (req, res, next) => {
             res.status(500).json({ error: 'Erreur serveur' });
         });
 };
+
 
 // Supprimer un autocollant (ne supprime pas l'image)
 exports.deleteSticker = async (req, res) => {
@@ -77,11 +80,17 @@ exports.getOneSticker = (req, res, next) => {
 exports.getAllStickers = (req, res, next) => {
     const owner = req.query.owner;
     const filter = req.query.filter;
+    const minStars = req.query.minStars ? parseInt(req.query.minStars, 10) : 0; // Filtre optionnel pour les étoiles (minStars)
 
     let query = owner ? { owner: owner } : {};
 
     if (filter === 'doublons') {
         query.quantity = { $gt: 1 }; 
+    }
+
+    // Si un filtre pour les étoiles est fourni, on l'ajoute à la requête
+    if (minStars > 0) {
+        query.stars = { $gte: minStars };  // On filtre les autocollants qui ont au moins 'minStars' étoiles
     }
 
     if (filter === 'exchange') {
@@ -100,7 +109,9 @@ exports.getAllStickers = (req, res, next) => {
             .catch(error => res.status(400).json({ error }));
         return;
     }
+
     Sticker.find(query)
         .then(stickers => res.status(200).json(stickers))
         .catch(error => res.status(400).json({ error }));
 };
+

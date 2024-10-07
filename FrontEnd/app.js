@@ -25,33 +25,35 @@ const filterStickers = async (owner, filter = 'tous') => {
 // Fonction pour ajouter un autocollant
 const addSticker = async (sticker) => {
     try {
-      const formData = new FormData();
-      formData.append('name', sticker.name);
-      formData.append('collection', sticker.collection);
-      formData.append('owner', sticker.owner);
-  
-      const response = await fetch(`${API_URL}`, {
-        method: 'POST',
-        body: formData,
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-  
-        // Afficher la modal si l'ajout est un succès
-        showConfirmationModal();
-  
-        // Recharger les autocollants après l'ajout
-        fetchStickers();
-        document.getElementById('camille-select').selectedIndex = 0;
-        document.getElementById('andrea-select').selectedIndex = 0;
-      } else {
-        console.error('Erreur lors de l\'ajout de l\'autocollant');
-      }
+        const formData = new FormData();
+        formData.append('name', sticker.name);
+        formData.append('collection', sticker.collection);
+        formData.append('owner', sticker.owner);
+        formData.append('stars', sticker.stars);  // Ajoutez le champ stars
+
+        const response = await fetch(`${API_URL}`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // Afficher la modal si l'ajout est un succès
+            showConfirmationModal();
+
+            // Recharger les autocollants après l'ajout
+            fetchStickers();
+            document.getElementById('camille-select').selectedIndex = 0;
+            document.getElementById('andrea-select').selectedIndex = 0;
+        } else {
+            console.error('Erreur lors de l\'ajout de l\'autocollant');
+        }
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de l\'autocollant :', error);
+        console.error('Erreur lors de l\'ajout de l\'autocollant :', error);
     }
 };
+
 
 // Fonction pour récupérer les autocollants existants
 const fetchStickers = async () => {
@@ -72,11 +74,11 @@ const displayStickers = (stickers) => {
     message.innerHTML = '';
 
     stickers.sort((a, b) => {
-      const collectionOrder = Object.keys(namesByCollection).indexOf(a.collection) - Object.keys(namesByCollection).indexOf(b.collection);
-      if (collectionOrder !== 0) {
-        return collectionOrder; 
-      }
-      return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
+        const collectionOrder = Object.keys(namesByCollection).indexOf(a.collection) - Object.keys(namesByCollection).indexOf(b.collection);
+        if (collectionOrder !== 0) {
+            return collectionOrder; 
+        }
+        return namesByCollection[a.collection].indexOf(a.name) - namesByCollection[b.collection].indexOf(b.name);
     });
 
     if (stickers.length === 0) {
@@ -114,12 +116,15 @@ const displayStickers = (stickers) => {
         const stickerDiv = document.createElement('div');
         stickerDiv.classList.add('sticker');
         stickerDiv.innerHTML = `
-          ${sticker.imageUrl ? `<img src="${sticker.imageUrl}" alt="${sticker.name}" width="100">` : ''}
-          <h3>${sticker.name}</h3>
-          <p>${sticker.collection}</p>
-          <p>${sticker.owner}</p>
-          ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
-          <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
+            ${sticker.imageUrl ? `<img src="${sticker.imageUrl}" alt="${sticker.name}" width="100">` : ''}
+            <h3>${sticker.name}</h3>
+            <p>${sticker.collection}</p>
+            <p>${sticker.owner}</p>
+            <div class="stars">
+              ${'★'.repeat(sticker.stars)}${'☆'.repeat(5 - sticker.stars)}  <!-- Affiche 5 étoiles en fonction du nombre d'étoiles données -->
+            </div>
+            ${sticker.quantity > 1 ? `<span class="sticker-count">+${sticker.quantity - 1}</span>` : ''}
+            <button onclick="showDeleteModal('${sticker._id}')">Supprimer</button>
         `;
 
         // Ajouter le sticker à la grille de la collection en cours
