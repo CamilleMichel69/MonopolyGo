@@ -1,10 +1,11 @@
 const Sticker = require('../models/sticker');
-const stickerImageMapping = require('../models/stickerPhoto'); 
+const stickerImageMapping = require('../models/stickerPhoto'); // Mapping des images
 
 // Créer un nouvel autocollant
 exports.createSticker = (req, res, next) => {
-    const { name, collection, owner, stars } = req.body;
+    const { name, collection, owner } = req.body;
 
+    // Vérification du mapping pour obtenir le fichier image correct
     const imageFileName = stickerImageMapping[collection]?.[name];
 
     if (!imageFileName) {
@@ -13,38 +14,31 @@ exports.createSticker = (req, res, next) => {
 
     const imageUrl = `${req.protocol}://${req.get('host')}/images/stickers/${imageFileName}`;
 
+    // Recherche d'un autocollant existant avec le même nom, collection et owner
     Sticker.findOne({ name, collection, owner })
         .then(existingSticker => {
             if (existingSticker) {
+                // Si l'autocollant existe, incrémente la quantité
                 existingSticker.quantity = (existingSticker.quantity || 1) + 1;
-                if (stars !== undefined) existingSticker.stars = stars;  // Mise à jour des étoiles
-
                 return existingSticker.save()
                     .then(() => res.status(200).json({ message: 'Quantité mise à jour !' }))
-                    .catch(error => {
-                        console.error('Erreur lors de la mise à jour de la quantité:', error);
-                        res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' });
-                    });
+                    .catch(error => res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' }));
             } else {
                 const sticker = new Sticker({
                     name,
                     collection,
                     imageUrl,
                     owner,
-                    quantity: 1,
-                    stars: stars || 0  // Par défaut, 0 étoile
+                    quantity: 1
                 });
 
                 sticker.save()
                     .then(() => res.status(201).json({ message: 'Autocollant enregistré !' }))
-                    .catch(error => {
-                        console.error('Erreur lors de l\'enregistrement:', error);
-                        res.status(500).json({ error: 'Erreur lors de l\'enregistrement' });
-                    });
+                    .catch(error => res.status(500).json({ error: 'Erreur lors de l\'enregistrement' }));
             }
         })
         .catch(error => {
-            console.error('Erreur lors de la recherche:', error);
+            console.error('Erreur lors de la recherche :', error);
             res.status(500).json({ error: 'Erreur serveur' });
         });
 };
@@ -86,17 +80,11 @@ exports.getOneSticker = (req, res, next) => {
 exports.getAllStickers = (req, res, next) => {
     const owner = req.query.owner;
     const filter = req.query.filter;
-    const minStars = req.query.minStars ? parseInt(req.query.minStars, 10) : 0; // Filtre optionnel pour les étoiles (minStars)
 
     let query = owner ? { owner: owner } : {};
 
     if (filter === 'doublons') {
         query.quantity = { $gt: 1 }; 
-    }
-
-    // Si un filtre pour les étoiles est fourni, on l'ajoute à la requête
-    if (minStars > 0) {
-        query.stars = { $gte: minStars };  // On filtre les autocollants qui ont au moins 'minStars' étoiles
     }
 
     if (filter === 'exchange') {
@@ -115,9 +103,7 @@ exports.getAllStickers = (req, res, next) => {
             .catch(error => res.status(400).json({ error }));
         return;
     }
-
     Sticker.find(query)
         .then(stickers => res.status(200).json(stickers))
         .catch(error => res.status(400).json({ error }));
 };
-

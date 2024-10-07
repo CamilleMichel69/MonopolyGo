@@ -6,7 +6,6 @@ const stickerSchema = mongoose.Schema({
     imageUrl: { type: String, required: true },
     owner: { type: String, required: true },
     quantity: { type: Number, default: 1 },
-    stars: { type: Number, default: 1 },
 });
 
 module.exports = mongoose.model('Sticker', stickerSchema);

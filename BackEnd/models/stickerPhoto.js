@@ -1,6 +1,6 @@
 const stickerImageMapping = {
     "New York de Spidey": {
-      "NY, Mon Pote !": { image: "NewYorkSpidey_NYMonPote.jpg", stars: 3},
+      "NY, Mon Pote !": "NewYorkSpidey_NYMonPote.jpg",
       "Qui Suis-Je ?": "NewYorkSpidey_Quisuisje.jpg",
       "Metro en Retard": "NewYorkSpidey_Metroenretard.jpg",
       "Transport Aérien": "NewYorkSpidey_Transportaerien.jpg",
@@ -195,7 +195,7 @@ const stickerImageMapping = {
         "Orbe d'Agamotto": "EtrangeStrange_OrbeDAgamotto.jpg",
         "Gargantos": "EtrangeStrange_Gargantos.jpg",
         "Portail de Retour": "EtrangeStrange_PortailDeRetour.jpg",
-        "Tout est Normal": { image : "EtrangeStrange_ToutEstNormal.jpg", stars : 5},
+        "Tout est Normal": "EtrangeStrange_ToutEstNormal.jpg",
     }
   };
 
